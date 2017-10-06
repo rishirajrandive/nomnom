@@ -1,6 +1,7 @@
 # Built application files
 *.apk
 *.ap_
+/*/build/
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -34,6 +35,7 @@ captures/
 
 # Intellij
 *.iml
+.idea/*
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -53,3 +55,15 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore schemas generated
+app/schemas/*
