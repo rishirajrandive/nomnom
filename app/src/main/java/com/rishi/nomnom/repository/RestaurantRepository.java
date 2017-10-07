@@ -18,6 +18,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 /**
  * Created by rishi on 10/6/17.
+ * Repo for restaurants
+ * Kind of cache is implemented here, it works because location is always same
+ * But for future this could be improved to be better.
  */
 
 public class RestaurantRepository {

@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 
 /**
  * Created by rishi on 10/7/17.
+ *
+ * Holder for loading images for photos URL
  */
 
 public class PhotoHolder extends RecyclerView.ViewHolder {

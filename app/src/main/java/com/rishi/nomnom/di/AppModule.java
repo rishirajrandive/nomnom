@@ -33,17 +33,11 @@ public class AppModule {
     WebService provideWebservice() {
         RxJava2CallAdapterFactory rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
         // add logging as last interceptor
         builder.addInterceptor(logging);
-        // add interceptor to add the cookies to request
-        //builder.addInterceptor(new AddCookiesInterceptor(mApplication.getApplicationContext()));
-        // add interceptor to store the cookies from response
-        //builder.addInterceptor(new ReceivedCookiesInterceptor(mApplication.getApplicationContext()));
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://maps.googleapis.com")

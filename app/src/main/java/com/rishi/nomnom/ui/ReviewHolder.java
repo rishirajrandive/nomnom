@@ -16,6 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by rishi on 10/7/17.
+ * Holds review and binds them to UI
  */
 
 public class ReviewHolder extends RecyclerView.ViewHolder {

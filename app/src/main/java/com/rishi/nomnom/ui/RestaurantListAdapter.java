@@ -20,6 +20,8 @@ import java.util.List;
 
 /**
  * Created by rishi on 10/6/17.
+ *
+ * Shows the list view items
  */
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListHolder> {

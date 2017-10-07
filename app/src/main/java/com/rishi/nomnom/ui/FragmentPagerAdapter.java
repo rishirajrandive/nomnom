@@ -8,6 +8,7 @@ import android.util.Log;
 
 /**
  * Created by rishi on 10/6/17.
+ * Creates two tabs
  */
 
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {

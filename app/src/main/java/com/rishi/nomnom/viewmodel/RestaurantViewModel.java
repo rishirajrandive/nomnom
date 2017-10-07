@@ -15,8 +15,6 @@ import javax.inject.Inject;
  */
 
 public class RestaurantViewModel extends ViewModel {
-    private LiveData<List<Restaurant>> mRestaurants;
-    private LiveData<Restaurant> mRestaurantDetail;
     private RestaurantRepository mRestaurantRepository;
 
     @Inject

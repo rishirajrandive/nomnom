@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by rishi on 10/6/17.
+ * Binds the list view items to the data
  */
 
 public class RestaurantListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

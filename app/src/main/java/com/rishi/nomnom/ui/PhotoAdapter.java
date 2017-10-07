@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by rishi on 10/7/17.
+ * Adapter for photo list shown on detail page
  */
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {

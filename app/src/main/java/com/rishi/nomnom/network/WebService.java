@@ -8,6 +8,8 @@ import retrofit2.http.QueryMap;
 
 /**
  * Created by rishi on 10/6/17.
+ *
+ * Endpoints for the APIs we are using in app
  */
 
 public interface WebService {

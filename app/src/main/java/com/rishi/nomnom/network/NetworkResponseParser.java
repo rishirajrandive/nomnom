@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * Created by rishi on 10/6/17.
+ *
+ * Parses the API response as per need. Could be made generic
  */
 
 public class NetworkResponseParser {

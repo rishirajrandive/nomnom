@@ -37,6 +37,7 @@ import javax.inject.Inject;
 
 /**
  * Created by rishi on 10/6/17.
+ * Two separate tabs are created here and relevant layout is inflated
  */
 
 public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -88,6 +89,9 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
     }
 
+    /**
+     * Inflates the map layout
+     */
     private View inflateMapTab(LayoutInflater inflater, @Nullable ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -97,6 +101,9 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
         return view;
     }
 
+    /**
+     * Inflates list view layout
+     */
     private View inflateListTab(LayoutInflater inflater, @Nullable ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list_items);
@@ -118,6 +125,9 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     }
 
+    /**
+     * Adds markers for all the restaurants found
+     */
     private void addMarkersOnMap(List<Restaurant> restaurants) {
         if(mMap == null || restaurants == null || restaurants.size() == 0) {
             return;
@@ -134,6 +144,9 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.setOnMarkerClickListener(this);
     }
 
+    /**
+     * Attaches the list of restaurants ot the adapter for list view
+     */
     private void addAdapterToRecyclerView(List<Restaurant> restaurants) {
         mRestaurantListAdapter.addItems(restaurants);
     }

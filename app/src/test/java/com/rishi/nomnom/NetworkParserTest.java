@@ -10,14 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by rishi on 10/6/17.
+ * Tests for parsing of JSON response and populating the models
  */
 
 @RunWith(JUnit4.class)
@@ -27,10 +24,6 @@ public class NetworkParserTest {
     @Before
     public void setup() {
         networkResponseParser = new NetworkResponseParser();
-        Date date = new Date(1499178457*1000);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
-        String dateStr = format.format(date);
     }
 
     @Test

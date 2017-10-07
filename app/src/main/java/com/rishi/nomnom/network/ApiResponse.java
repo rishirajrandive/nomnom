@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by rishi on 10/6/17.
+ *
+ * Holds generic/parent response for the APIs
  */
 
 public class ApiResponse {

@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by rishi on 10/7/17.
+ * Showing reviews on detail view
  */
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewHolder> {
