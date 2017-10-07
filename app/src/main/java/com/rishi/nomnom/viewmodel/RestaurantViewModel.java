@@ -3,12 +3,10 @@ package com.rishi.nomnom.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.rishi.nomnom.model.RestaurantDetail;
-import com.rishi.nomnom.model.RestaurantTile;
+import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.repository.RestaurantRepository;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,8 +15,8 @@ import javax.inject.Inject;
  */
 
 public class RestaurantViewModel extends ViewModel {
-    private LiveData<List<RestaurantTile>> mRestaurants;
-    private LiveData<RestaurantDetail> mRestaurantDetail;
+    private LiveData<List<Restaurant>> mRestaurants;
+    private LiveData<Restaurant> mRestaurantDetail;
     private RestaurantRepository mRestaurantRepository;
 
     @Inject
@@ -26,11 +24,15 @@ public class RestaurantViewModel extends ViewModel {
         mRestaurantRepository = restaurantRepository;
     }
 
-    public LiveData<List<RestaurantTile>> getRestaurants(Map<String, String> params){
-        return mRestaurantRepository.getRestaurants(params);
+    public LiveData<List<Restaurant>> getRestaurants(String location){
+        return mRestaurantRepository.getRestaurants(location);
     }
 
-    public LiveData<RestaurantDetail> getRestaurantDetail(String placeId) {
+    public void fetchRestaurants(String location){
+        mRestaurantRepository.fetchRestaurants(location);
+    }
+
+    public LiveData<Restaurant> getRestaurantDetail(String placeId) {
         return mRestaurantRepository.getRestaurantDetail(placeId);
     }
 }

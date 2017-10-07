@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">NomNom</string>
     <string name="title_activity_maps">Map</string>
+    <string name="toolbar_text">Restaurant Detail</string>
+    <string name="text_address">Address</string>
+    <string name="text_contact">Contact</string>
+    <string name="text_reviews">Restaurant Reviews</string>
 </resources>

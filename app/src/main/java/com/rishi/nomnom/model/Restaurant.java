@@ -9,7 +9,7 @@ import java.util.List;
  * Created by rishi on 10/6/17.
  */
 
-public class RestaurantTile {
+public class Restaurant {
     @SerializedName("id")
     @Expose
     private String mId;
@@ -40,8 +40,21 @@ public class RestaurantTile {
     @SerializedName("geometry")
     @Expose
     private Geometry mGeometry;
-
-    private RestaurantDetail mRestaurantDetail;
+    @SerializedName("reviews")
+    @Expose
+    private List<Review> mReviews;
+    @SerializedName("formatted_address")
+    @Expose
+    private String mFormattedAddress;
+    @SerializedName("formatted_phone_number")
+    @Expose
+    private String mFormattedPhone;
+    @SerializedName("url")
+    @Expose
+    private String mGoogleMapUrl;
+    @SerializedName("website")
+    @Expose
+    private String mWebsiteUrl;
 
     public String getId() {
         return mId;
@@ -67,11 +80,11 @@ public class RestaurantTile {
         this.mName = mName;
     }
 
-    public List<Photo> getPhoto() {
+    public List<Photo> getPhotoList() {
         return mPhoto;
     }
 
-    public void setPhoto(List<Photo> mPhoto) {
+    public void setPhotoList(List<Photo> mPhoto) {
         this.mPhoto = mPhoto;
     }
 
@@ -123,11 +136,43 @@ public class RestaurantTile {
         this.mGeometry = mGeometry;
     }
 
-    public RestaurantDetail getRestaurantDetail() {
-        return mRestaurantDetail;
+    public List<Review> getReviews() {
+        return mReviews;
     }
 
-    public void setRestaurantDetail(RestaurantDetail mRestaurantDetail) {
-        this.mRestaurantDetail = mRestaurantDetail;
+    public void setReviews(List<Review> mReviews) {
+        this.mReviews = mReviews;
+    }
+
+    public String getFormattedAddress() {
+        return mFormattedAddress;
+    }
+
+    public void setFormattedAddress(String mFormattedAddress) {
+        this.mFormattedAddress = mFormattedAddress;
+    }
+
+    public String getFormattedPhone() {
+        return mFormattedPhone;
+    }
+
+    public void setFormattedPhone(String mFormattedPhone) {
+        this.mFormattedPhone = mFormattedPhone;
+    }
+
+    public String getGoogleMapUrl() {
+        return mGoogleMapUrl;
+    }
+
+    public void setGoogleMapUrl(String mGoogleMapUrl) {
+        this.mGoogleMapUrl = mGoogleMapUrl;
+    }
+
+    public String getWebsiteUrl() {
+        return mWebsiteUrl;
+    }
+
+    public void setWebsiteUrl(String mWebsiteUrl) {
+        this.mWebsiteUrl = mWebsiteUrl;
     }
 }

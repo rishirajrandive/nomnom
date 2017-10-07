@@ -9,4 +9,9 @@
     <color name="colorSecondaryDark">#4f9a94</color>
     <color name="colorPrimaryText">#ffffff</color>
     <color name="colorSecondaryText">#000000</color>
+
+    <color name="colorRating">#FF9800</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorOpenNow">#4CAF50</color>
+    <color name="colorCloseNow">#FF5722</color>
 </resources>

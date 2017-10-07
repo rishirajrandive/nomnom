@@ -11,9 +11,9 @@ import retrofit2.http.QueryMap;
  */
 
 public interface WebService {
-    @GET("/nearbysearch/json")
+    @GET("/maps/api/place/nearbysearch/json")
     Observable<ApiResponse> getRestaurants(@QueryMap Map<String, String> params);
 
-    @GET("/details/json")
+    @GET("/maps/api/place/details/json")
     Observable<ApiResponse> getRestaurantDetail(@QueryMap Map<String, String> params);
 }

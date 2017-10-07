@@ -46,7 +46,7 @@ public class AppModule {
         //builder.addInterceptor(new ReceivedCookiesInterceptor(mApplication.getApplicationContext()));
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://maps.googleapis.com/maps/api/place/")
+                .baseUrl("https://maps.googleapis.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(rxAdapter)
                 .client(builder.build())

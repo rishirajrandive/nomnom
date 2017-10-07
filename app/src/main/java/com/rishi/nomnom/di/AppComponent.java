@@ -1,5 +1,9 @@
 package com.rishi.nomnom.di;
 
+import com.rishi.nomnom.MainActivity;
+import com.rishi.nomnom.RestaurantDetailActivity;
+import com.rishi.nomnom.TabFragment;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -11,4 +15,8 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
+    void inject(MainActivity mainActivity);
+    void inject(TabFragment tabFragment);
+    void inject(RestaurantDetailActivity restaurantDetailActivity);
 }
+

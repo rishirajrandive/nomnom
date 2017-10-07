@@ -3,8 +3,7 @@ package com.rishi.nomnom.repository;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.rishi.nomnom.model.RestaurantDetail;
-import com.rishi.nomnom.model.RestaurantTile;
+import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.network.NetworkResponseParser;
 import com.rishi.nomnom.network.WebService;
 import com.rishi.nomnom.util.Constants;
@@ -26,36 +25,51 @@ public class RestaurantRepository {
     private static final String TAG = RestaurantRepository.class.getSimpleName();
     private static final String GOOGLE_PLACES_KEY = "AIzaSyB-bpw0ollWA5AKpT11Y2CL2qPFs4kC_dk";
     private WebService mWebService;
+    private LiveData<List<Restaurant>> mRestaurantsLiveData;
+    private Map<String, LiveData<List<Restaurant>>> mCache;
 
     @Inject
     public RestaurantRepository(WebService webservice) {
         this.mWebService = webservice;
+        mCache = new HashMap<>();
     }
 
-    public LiveData<List<RestaurantTile>> getRestaurants(Map<String, String> params) {
+    public LiveData<List<Restaurant>> getRestaurants(String location) {
+        if(!mCache.containsKey(location)) {
+            fetchRestaurants(location);
+        }
+        return mRestaurantsLiveData;
+    }
+
+    public void fetchRestaurants(String location) {
+        Map<String, String> params = new HashMap<>();
+        params.put(Constants.PARAM_LOCATION, location);
+        params.put(Constants.PARAM_RADIUS, "500");
+        params.put(Constants.PARAM_TYPE, "restaurant");
         params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
-        final MutableLiveData<List<RestaurantTile>> restaurantsLiveData = new MutableLiveData<>();
+        final MutableLiveData<List<Restaurant>> restaurantsLiveData = new MutableLiveData<>();
 
         mWebService.getRestaurants(params)
                 .observeOn(Schedulers.io())
                 .map(apiResponse -> {
                     NetworkResponseParser parser = new NetworkResponseParser();
-                    List<RestaurantTile> restaurants = parser.getRestaurants(apiResponse);
+                    List<Restaurant> restaurants = parser.getRestaurants(apiResponse);
                     return restaurants;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(restaurants -> {
                     restaurantsLiveData.setValue(restaurants);
                 });
-        return restaurantsLiveData;
+        mRestaurantsLiveData = restaurantsLiveData;
+        mCache.put(location, mRestaurantsLiveData);
     }
 
-    public LiveData<RestaurantDetail> getRestaurantDetail(String placeId) {
+    public LiveData<Restaurant> getRestaurantDetail(String placeId) {
         Map<String, String> params = new HashMap<>(2);
         params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
         params.put(Constants.PARAM_PLACE_ID, placeId);
 
-        final MutableLiveData<RestaurantDetail> restaurantDetailLiveData = new MutableLiveData<>();
+        final MutableLiveData<Restaurant> restaurantDetailLiveData = new MutableLiveData<>();
 
         mWebService.getRestaurantDetail(params)
                 .observeOn(Schedulers.io())

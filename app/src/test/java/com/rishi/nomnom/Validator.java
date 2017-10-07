@@ -2,7 +2,7 @@ package com.rishi.nomnom;
 
 import com.rishi.nomnom.model.OpenHours;
 import com.rishi.nomnom.model.Photo;
-import com.rishi.nomnom.model.RestaurantTile;
+import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.model.Review;
 
 import org.junit.Assert;
@@ -13,21 +13,20 @@ import org.junit.Assert;
 
 public class Validator {
 
-    static void verifyFirstRestaurant(RestaurantTile restaurantTile) {
-        Assert.assertEquals(restaurantTile.getId(), "112226e5b074c6d767041d2761863c550d8a5f26");
-        Assert.assertEquals(restaurantTile.getName(), "Zuni Café.");
-        Assert.assertEquals(restaurantTile.getPlaceId(), "ChIJO7u9q5-AhYARiSSXyWv9eJ8");
-        Assert.assertNull(restaurantTile.getRestaurantDetail());
-        verifyFirstOpenHours(restaurantTile.getOpenHours());
+    static void verifyFirstRestaurant(Restaurant restaurant) {
+        Assert.assertEquals(restaurant.getId(), "112226e5b074c6d767041d2761863c550d8a5f26");
+        Assert.assertEquals(restaurant.getName(), "Zuni Café.");
+        Assert.assertEquals(restaurant.getPlaceId(), "ChIJO7u9q5-AhYARiSSXyWv9eJ8");
+        verifyFirstOpenHours(restaurant.getOpenHours());
 
-        Assert.assertEquals(restaurantTile.getPhoto().size(), 1);
-        verifyFirstPhoto(restaurantTile.getPhoto().get(0));
+        Assert.assertEquals(restaurant.getPhotoList().size(), 1);
+        verifyFirstPhoto(restaurant.getPhotoList().get(0));
 
-        Assert.assertNotNull(restaurantTile.getGeometry());
-        Assert.assertNotNull(restaurantTile.getGeometry().getLocation());
+        Assert.assertNotNull(restaurant.getGeometry());
+        Assert.assertNotNull(restaurant.getGeometry().getLocation());
 
-        Assert.assertEquals(restaurantTile.getGeometry().getLocation().getLatitude(), 37.7736262, 0);
-        Assert.assertEquals(restaurantTile.getGeometry().getLocation().getLongitude(), -122.421645, 0);
+        Assert.assertEquals(restaurant.getGeometry().getLocation().getLatitude(), 37.7736262, 0);
+        Assert.assertEquals(restaurant.getGeometry().getLocation().getLongitude(), -122.421645, 0);
     }
 
     private static void verifyFirstOpenHours(OpenHours openHours) {
@@ -39,21 +38,20 @@ public class Validator {
         Assert.assertEquals(photo.getPhotoUrl(), "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyB-bpw0ollWA5AKpT11Y2CL2qPFs4kC_dk&photo_reference=CmRaAAAAi8thfGP1CT0-RTWLN-BdOQi91lvoL7cnbwk2PftcnbJLkgHnuayXCs9ddQ-GO69tpWfKlefA8icPJkaoyO1VcIEFddWthBMwHrB_18zp3xVgCe3Qn_bnHK2YoYELSnzkEhBahVYWzXrMSHfyorx1lVJqGhQAHSbKHN_rPotmh0qXeaRsTWd8mA");
     }
 
-    static void verifySecondRestaurant(RestaurantTile restaurantTile) {
-        Assert.assertEquals(restaurantTile.getId(), "2f06454d3f2021df376d7a49c82bbd4298e0694d");
-        Assert.assertEquals(restaurantTile.getName(), "Rich Table");
-        Assert.assertEquals(restaurantTile.getPlaceId(), "ChIJh_24QJ-AhYAR_xbUNVN2Xns");
-        Assert.assertNull(restaurantTile.getRestaurantDetail());
-        verifySecondOpenHours(restaurantTile.getOpenHours());
+    static void verifySecondRestaurant(Restaurant restaurant) {
+        Assert.assertEquals(restaurant.getId(), "2f06454d3f2021df376d7a49c82bbd4298e0694d");
+        Assert.assertEquals(restaurant.getName(), "Rich Table");
+        Assert.assertEquals(restaurant.getPlaceId(), "ChIJh_24QJ-AhYAR_xbUNVN2Xns");
+        verifySecondOpenHours(restaurant.getOpenHours());
 
-        Assert.assertEquals(restaurantTile.getPhoto().size(), 1);
-        verifySecondPhoto(restaurantTile.getPhoto().get(0));
+        Assert.assertEquals(restaurant.getPhotoList().size(), 1);
+        verifySecondPhoto(restaurant.getPhotoList().get(0));
 
-        Assert.assertNotNull(restaurantTile.getGeometry());
-        Assert.assertNotNull(restaurantTile.getGeometry().getLocation());
+        Assert.assertNotNull(restaurant.getGeometry());
+        Assert.assertNotNull(restaurant.getGeometry().getLocation());
 
-        Assert.assertEquals(restaurantTile.getGeometry().getLocation().getLatitude(), 37.7749041, 0);
-        Assert.assertEquals(restaurantTile.getGeometry().getLocation().getLongitude(), -122.4227357, 0);
+        Assert.assertEquals(restaurant.getGeometry().getLocation().getLatitude(), 37.7749041, 0);
+        Assert.assertEquals(restaurant.getGeometry().getLocation().getLongitude(), -122.4227357, 0);
     }
 
     private static void verifySecondOpenHours(OpenHours openHours) {

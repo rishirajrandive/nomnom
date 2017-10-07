@@ -1,7 +1,6 @@
 package com.rishi.nomnom;
 
-import com.rishi.nomnom.model.RestaurantDetail;
-import com.rishi.nomnom.model.RestaurantTile;
+import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.network.ApiResponse;
 import com.rishi.nomnom.network.NetworkResponseParser;
 
@@ -11,7 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by rishi on 10/6/17.
@@ -24,6 +27,10 @@ public class NetworkParserTest {
     @Before
     public void setup() {
         networkResponseParser = new NetworkResponseParser();
+        Date date = new Date(1499178457*1000);
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+        String dateStr = format.format(date);
     }
 
     @Test
@@ -49,7 +56,7 @@ public class NetworkParserTest {
 
     @Test
     public void testRestaurantListParser() {
-        List<RestaurantTile> restaurants = networkResponseParser.getRestaurants(MockResponseStore.getMockRestaurants());
+        List<Restaurant> restaurants = networkResponseParser.getRestaurants(MockResponseStore.getMockRestaurants());
         Assert.assertEquals(restaurants.size(), 2);
         Validator.verifyFirstRestaurant(restaurants.get(0));
         Validator.verifySecondRestaurant(restaurants.get(1));
@@ -57,7 +64,7 @@ public class NetworkParserTest {
 
     @Test
     public void testRestaurantDetailParser() {
-        RestaurantDetail restaurantDetail = networkResponseParser.getRestaurantDetail(MockResponseStore.getMockRestaurantDetails());
+        Restaurant restaurantDetail = networkResponseParser.getRestaurantDetail(MockResponseStore.getMockRestaurantDetails());
         Assert.assertNotNull(restaurantDetail);
 
         Assert.assertEquals(restaurantDetail.getFormattedAddress(), "1658 Market St, San Francisco, CA 94102, USA");

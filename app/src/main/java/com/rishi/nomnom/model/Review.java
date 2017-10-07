@@ -26,6 +26,9 @@ public class Review {
     @SerializedName("text")
     @Expose
     private String mText;
+    @SerializedName("relative_time_description")
+    @Expose
+    private String mRelativeTimeDesc;
 
     public String getAuthorName() {
         return mAuthorName;
@@ -73,5 +76,13 @@ public class Review {
 
     public void setText(String mText) {
         this.mText = mText;
+    }
+
+    public String getRelativeTimeDesc() {
+        return mRelativeTimeDesc;
+    }
+
+    public void setRelativeTimeDesc(String mRelativeTimeDesc) {
+        this.mRelativeTimeDesc = mRelativeTimeDesc;
     }
 }
