@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rishi.nomnom.R;
 import com.rishi.nomnom.model.Photo;
 
 import java.util.ArrayList;
@@ -30,9 +31,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View tabContentView = inflater.inflate(R.layout.recycler_photo, parent, false);
 
-        PhotoHolder viewHolder = new PhotoHolder(mContext, tabContentView);
-
-        return viewHolder;
+        return new PhotoHolder(mContext, tabContentView);
     }
 
     @Override

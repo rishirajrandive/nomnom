@@ -12,12 +12,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rishi.nomnom.databinding.ActivityRestaurantDetailBinding;
 import com.rishi.nomnom.model.OpenHours;
 import com.rishi.nomnom.model.Photo;
+import com.rishi.nomnom.ui.PhotoAdapter;
+import com.rishi.nomnom.ui.ReviewAdapter;
 import com.rishi.nomnom.viewmodel.RestaurantViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +36,6 @@ import javax.inject.Inject;
 public class RestaurantDetailActivity extends AppCompatActivity {
     private static final String TAG = RestaurantDetailActivity.class.getSimpleName();
     public static final String ARG_PLACE_ID = "ARG_PLACE_ID";
-    private RestaurantViewModel mRestaurantViewModel;
     private ActivityRestaurantDetailBinding mDataBinding;
 
     @Inject
@@ -68,19 +70,24 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         rvReview.setAdapter(reviewAdapter);
         rvReview.setLayoutManager(new LinearLayoutManager(this));
 
-        mRestaurantViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RestaurantViewModel.class);
+        RestaurantViewModel mRestaurantViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RestaurantViewModel.class);
         if(placeId == null) {
             Log.d(TAG, "onCreate: Something is not right here place Id can't be null ");
             return;
         }
         mRestaurantViewModel.getRestaurantDetail(placeId).observe(this, restaurantDetail -> {
             Log.d(TAG, "onCreate: Binding the details");
+            if(restaurantDetail == null) {
+                Log.e(TAG, "onCreate: restaurant details is null");
+                return;
+            }
             mDataBinding.setRestaurant(restaurantDetail);
             reviewAdapter.addItems(restaurantDetail.getReviews());
             photoAdapter.addItems(restaurantDetail.getPhotoList());
         });
     }
 
+    // FIXME Better way to handle this
     @BindingAdapter({"detail_price_level"})
     public static void showPriceLevel(TextView view, int priceLevel) {
         Log.d(TAG, "Binding price level");
@@ -100,10 +107,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         }
         Log.d(TAG, "showOpenClosed: ");
         if(openHours.isOpenNow()) {
-            view.setText("Open");
+            view.setText(R.string.text_open);
             view.setTextColor(Color.parseColor("#4CAF50"));
         }else {
-            view.setText("Closed");
+            view.setText(R.string.text_close);
             view.setTextColor(Color.parseColor("#FF5722"));
         }
     }
@@ -117,7 +124,19 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         Picasso.with(view.getContext())
                 .load(photos.get(0).getPhotoUrl())
+                .error(R.drawable.ic_launcher_background)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(view);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

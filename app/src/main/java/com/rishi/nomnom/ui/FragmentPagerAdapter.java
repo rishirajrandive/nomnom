@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

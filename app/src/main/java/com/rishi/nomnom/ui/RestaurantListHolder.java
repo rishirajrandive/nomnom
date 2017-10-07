@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rishi.nomnom.R;
 import com.rishi.nomnom.databinding.RecyclerRestaurantTileBinding;
 import com.rishi.nomnom.model.OpenHours;
 import com.rishi.nomnom.model.Photo;
@@ -37,7 +38,7 @@ public class RestaurantListHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     public void bindItem(Restaurant restaurant){
-        Log.d(TAG, "bindItem: "+ restaurant.getName());
+        Log.d(TAG, "bindItem: restaurant "+ restaurant.getName());
         mDataBinding.setRestaurant(restaurant);
     }
 
@@ -45,7 +46,6 @@ public class RestaurantListHolder extends RecyclerView.ViewHolder implements Vie
     public void onClick(View view) {
         int position = getAdapterPosition(); // gets item position
         if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
-            Log.d(TAG, "User clicked");
             mItemClickListener.onItemClick(view, position);
         }
     }
@@ -68,22 +68,28 @@ public class RestaurantListHolder extends RecyclerView.ViewHolder implements Vie
 
     @BindingAdapter({"open_now"})
     public static void showOpenClosed(TextView view, OpenHours openHours) {
-        Log.d(TAG, "showOpenClosed: ");
+        if(openHours == null) {
+            return;
+        }
         if(openHours.isOpenNow()) {
-            view.setText("Open");
+            view.setText(R.string.text_open);
             view.setTextColor(Color.parseColor("#4CAF50"));
         }else {
-            view.setText("Closed");
+            view.setText(R.string.text_close);
             view.setTextColor(Color.parseColor("#FF5722"));
         }
     }
 
     @BindingAdapter({"photo"})
     public static void showRestaurantPhoto(ImageView view, List<Photo> photos) {
-        Log.d(TAG, "showRestaurantPhoto: " + photos.get(0).getPhotoUrl());
-
+        if(photos == null || photos.size() == 0) {
+            return;
+        }
         Picasso.with(view.getContext())
                 .load(photos.get(0).getPhotoUrl())
+                .fit()
+                .centerCrop()
+                .error(R.drawable.ic_launcher_background)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(view);
     }

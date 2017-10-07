@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.rishi.nomnom.R;
 import com.rishi.nomnom.databinding.RecyclerPhotoBinding;
 import com.rishi.nomnom.model.Photo;
 import com.squareup.picasso.Picasso;
@@ -34,7 +35,8 @@ public class PhotoHolder extends RecyclerView.ViewHolder {
     public static void loadProfileImage(ImageView view, String url) {
         Picasso.with(view.getContext())
                 .load(url)
-                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.place_holder)
+                .placeholder(R.drawable.place_holder)
                 .into(view);
     }
 }

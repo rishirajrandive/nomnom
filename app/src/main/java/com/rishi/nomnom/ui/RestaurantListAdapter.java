@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rishi.nomnom.R;
+import com.rishi.nomnom.RestaurantDetailActivity;
 import com.rishi.nomnom.databinding.RecyclerRestaurantTileBinding;
 import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.util.ItemClickListener;
@@ -36,8 +38,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListHo
         LayoutInflater inflater = LayoutInflater.from(context);
 
         RecyclerRestaurantTileBinding viewDataBinding = DataBindingUtil.inflate(inflater, R.layout.recycler_restaurant_tile, parent, false);
-//        View tabContentView = inflater.inflate(R.layout.recycler_restaurant_tile, parent, false);
-
         RestaurantListHolder viewHolder = new RestaurantListHolder(mContext, viewDataBinding.getRoot());
 
         viewHolder.setItemClickListener(new ItemClickListener() {

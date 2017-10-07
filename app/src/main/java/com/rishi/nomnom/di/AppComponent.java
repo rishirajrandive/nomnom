@@ -2,7 +2,7 @@ package com.rishi.nomnom.di;
 
 import com.rishi.nomnom.MainActivity;
 import com.rishi.nomnom.RestaurantDetailActivity;
-import com.rishi.nomnom.TabFragment;
+import com.rishi.nomnom.ui.TabFragment;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.rishi.nomnom.R;
 import com.rishi.nomnom.databinding.RecyclerReviewsBinding;
 import com.rishi.nomnom.model.Review;
 import com.squareup.picasso.Picasso;
@@ -37,6 +38,7 @@ public class ReviewHolder extends RecyclerView.ViewHolder {
     public static void loadProfileImage(CircleImageView view, String url) {
         Picasso.with(view.getContext())
                 .load(url)
+                .error(R.drawable.ic_placeholder)
                 .placeholder(R.drawable.ic_placeholder)
                 .into(view);
     }

@@ -53,13 +53,10 @@ public class RestaurantRepository {
                 .observeOn(Schedulers.io())
                 .map(apiResponse -> {
                     NetworkResponseParser parser = new NetworkResponseParser();
-                    List<Restaurant> restaurants = parser.getRestaurants(apiResponse);
-                    return restaurants;
+                    return parser.getRestaurants(apiResponse);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(restaurants -> {
-                    restaurantsLiveData.setValue(restaurants);
-                });
+                .subscribe(restaurantsLiveData::setValue);
         mRestaurantsLiveData = restaurantsLiveData;
         mCache.put(location, mRestaurantsLiveData);
     }
@@ -78,9 +75,7 @@ public class RestaurantRepository {
                     return parser.getRestaurantDetail(response);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(restaurantDetail -> {
-                   restaurantDetailLiveData.setValue(restaurantDetail);
-                });
+                .subscribe(restaurantDetailLiveData::setValue);
         return restaurantDetailLiveData;
     }
 }

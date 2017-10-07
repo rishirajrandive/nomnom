@@ -1,8 +1,9 @@
-package com.rishi.nomnom;
+package com.rishi.nomnom.ui;
 
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.rishi.nomnom.MainApp;
+import com.rishi.nomnom.R;
+import com.rishi.nomnom.RestaurantDetailActivity;
 import com.rishi.nomnom.model.Location;
 import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.util.TabType;
@@ -44,10 +48,12 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private RestaurantViewModel mRestaurantViewModel;
     private RestaurantListAdapter mRestaurantListAdapter;
 
-    private String location = "37.7749, -122.4194";
+    // Co-ordinates for SF for the task
+    private final String location = "37.7749, -122.4194";
+    private final LatLng sfLatLng = new LatLng(37.7749, -122.4194);
+
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
-
 
     public static TabFragment newInstance(int tabPostion) {
         Bundle args = new Bundle();
@@ -98,22 +104,17 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mRecyclerView.setAdapter(mRestaurantListAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mRestaurantViewModel.getRestaurants(location).observe(this, restaurantTiles -> {
-            addAdapterToRecyclerView(restaurantTiles);
-        });
+        mRestaurantViewModel.getRestaurants(location).observe(this, this::addAdapterToRecyclerView);
         return view;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng sfLatLng = new LatLng(37.7749, -122.4194);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sfLatLng));
         mMap.animateCamera(CameraUpdateFactory
                 .newLatLngZoom(sfLatLng, Math.max(16, mMap.getCameraPosition().zoom)));
-        mRestaurantViewModel.getRestaurants(location).observe(this, restaurantTiles -> {
-            addMarkersOnMap(restaurantTiles);
-        });
+        mRestaurantViewModel.getRestaurants(location).observe(this, this::addMarkersOnMap);
 
     }
 
@@ -140,7 +141,15 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(Marker marker) {
         Restaurant restaurant = (Restaurant) marker.getTag();
+        if(restaurant == null) {
+            Log.e(TAG, "onMarkerClick: Restaurant object null");
+            return false;
+        }
         Toast.makeText(getContext(), restaurant.getName(), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onMarkerClick: Opening detail view for "+ restaurant.getName());
+        Intent intent = new Intent(getContext(), RestaurantDetailActivity.class);
+        intent.putExtra(RestaurantDetailActivity.ARG_PLACE_ID, restaurant.getPlaceId());
+        getActivity().startActivity(intent);
         return false;
     }
 }
