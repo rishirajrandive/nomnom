@@ -42,7 +42,7 @@ public class ListTabFragment extends Fragment {
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
 
-    public static ListTabFragment newInstance(int tabPostion) {
+    public static ListTabFragment newInstance() {
         ListTabFragment fragment = new ListTabFragment();
         return fragment;
     }

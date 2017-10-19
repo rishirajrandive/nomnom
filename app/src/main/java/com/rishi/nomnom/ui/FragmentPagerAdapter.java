@@ -30,7 +30,11 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Log.d(TAG, "Get item called for position "+ position);
-        return ListTabFragment.newInstance(position);
+        if(position == 0) {
+            return MapTabFragment.newInstance();
+        }else {
+            return ListTabFragment.newInstance();
+        }
     }
 
     @Override

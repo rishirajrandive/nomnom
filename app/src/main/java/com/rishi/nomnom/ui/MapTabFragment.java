@@ -47,7 +47,7 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
 
-    public static MapTabFragment newInstance(int tabPostion) {
+    public static MapTabFragment newInstance() {
         MapTabFragment fragment = new MapTabFragment();
         return fragment;
     }
