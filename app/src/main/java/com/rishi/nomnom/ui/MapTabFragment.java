@@ -34,7 +34,8 @@ import javax.inject.Inject;
  * Created by rishi on 10/18/17.
  */
 
-public class MapTabFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapTabFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnCameraIdleListener {
     private static final String TAG = MapTabFragment.class.getSimpleName();
     private GoogleMap mMap;
     private RestaurantViewModel mRestaurantViewModel;
@@ -108,6 +109,7 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
         }
 
         mMap.setOnMarkerClickListener(this);
+        mMap.setOnCameraIdleListener(this);
     }
 
     @Override
@@ -123,5 +125,15 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
         intent.putExtra(RestaurantDetailActivity.ARG_PLACE_ID, restaurant.getPlaceId());
         getActivity().startActivity(intent);
         return false;
+    }
+
+    @Override
+    public void onCameraIdle() {
+        LatLng latLng = mMap.getCameraPosition().target;
+        Log.d(TAG, "onCameraIdle: Camera movement stopped, new location "+ latLng.toString());
+        String location = latLng.latitude + "," + latLng.longitude;
+        mRestaurantViewModel.getRestaurants(location).observe(this, restaurants -> {
+            addMarkersOnMap(restaurants);
+        });
     }
 }

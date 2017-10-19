@@ -76,7 +76,7 @@ public class RestaurantRepository {
         final MutableLiveData<Restaurant> restaurantDetailLiveData = new MutableLiveData<>();
 
         mWebService.getRestaurantDetail(params)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .map(response -> {
                     NetworkResponseParser parser = new NetworkResponseParser();
                     return parser.getRestaurantDetail(response);
@@ -92,7 +92,11 @@ public class RestaurantRepository {
             return nextPagesOfRestaurants;
         }
 
-        mWebService.getNextPageRestaurants(mRestaurantApiResponse.getNextPageToken(), GOOGLE_PLACES_KEY)
+        Map<String, String> params = new HashMap<>();
+        params.put(Constants.PARAM_PAGE_TOKEN, mRestaurantApiResponse.getNextPageToken());
+        params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
+
+        mWebService.getRestaurants(params)
                 .observeOn(Schedulers.io())
                 .map(response -> {
                     NetworkResponseParser parser = new NetworkResponseParser();

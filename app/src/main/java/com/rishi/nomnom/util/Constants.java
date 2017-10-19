@@ -12,4 +12,5 @@ public class Constants {
     public static final String PARAM_PLACE_ID = "place_id";
     public static final String PARAM_PHOTO_REF = "photoreference";
     public static final String PARAM_MAX_WIDTH = "maxwidth";
+    public static final String PARAM_PAGE_TOKEN = "pagetoken";
 }
