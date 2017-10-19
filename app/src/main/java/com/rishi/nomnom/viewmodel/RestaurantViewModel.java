@@ -33,4 +33,8 @@ public class RestaurantViewModel extends ViewModel {
     public LiveData<Restaurant> getRestaurantDetail(String placeId) {
         return mRestaurantRepository.getRestaurantDetail(placeId);
     }
+
+    public LiveData<List<Restaurant>> getNextPageRestaurants(){
+        return mRestaurantRepository.getNextPageRestaurants();
+    }
 }

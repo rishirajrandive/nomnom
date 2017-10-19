@@ -1,14 +1,11 @@
 package com.rishi.nomnom.ui;
 
-
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,25 +24,19 @@ import com.rishi.nomnom.R;
 import com.rishi.nomnom.RestaurantDetailActivity;
 import com.rishi.nomnom.model.Location;
 import com.rishi.nomnom.model.Restaurant;
-import com.rishi.nomnom.util.TabType;
 import com.rishi.nomnom.viewmodel.RestaurantViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 /**
- * Created by rishi on 10/6/17.
- * Two separate tabs are created here and relevant layout is inflated
+ * Created by rishi on 10/18/17.
  */
 
-public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-    private static final String TAG = TabFragment.class.getSimpleName();
-    public static final String ARG_TAB_POSITION = "ARG_TAB_POSITION";
-    private int mTabPosition;
+public class MapTabFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+    private static final String TAG = MapTabFragment.class.getSimpleName();
     private GoogleMap mMap;
-    private RecyclerView mRecyclerView;
     private RestaurantViewModel mRestaurantViewModel;
     private RestaurantListAdapter mRestaurantListAdapter;
 
@@ -56,11 +47,8 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
 
-    public static TabFragment newInstance(int tabPostion) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_TAB_POSITION, tabPostion);
-        TabFragment fragment = new TabFragment();
-        fragment.setArguments(args);
+    public static MapTabFragment newInstance(int tabPostion) {
+        MapTabFragment fragment = new MapTabFragment();
         return fragment;
     }
 
@@ -68,25 +56,17 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onCreate(@Nullable Bundle savedInstanceState) {
         ((MainApp) getActivity().getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
-        mTabPosition = getArguments().getInt(ARG_TAB_POSITION);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: for tab position " + mTabPosition);
+        Log.d(TAG, "onCreateView: for map ");
 
         mRestaurantViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RestaurantViewModel.class);
         mRestaurantViewModel.fetchRestaurants(location);
 
-        switch (TabType.valueOf(mTabPosition)) {
-            case MAP_TAB:
-                return inflateMapTab(inflater, container);
-            case LIST_TAB:
-                return inflateListTab(inflater, container);
-            default:
-                return inflateMapTab(inflater, container);
-        }
+        return inflateMapTab(inflater, container);
     }
 
     /**
@@ -98,20 +78,6 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        return view;
-    }
-
-    /**
-     * Inflates list view layout
-     */
-    private View inflateListTab(LayoutInflater inflater, @Nullable ViewGroup container) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list_items);
-        mRestaurantListAdapter = new RestaurantListAdapter(getContext(), new ArrayList<>());
-        mRecyclerView.setAdapter(mRestaurantListAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        mRestaurantViewModel.getRestaurants(location).observe(this, this::addAdapterToRecyclerView);
         return view;
     }
 
@@ -129,37 +95,30 @@ public class TabFragment extends Fragment implements OnMapReadyCallback, GoogleM
      * Adds markers for all the restaurants found
      */
     private void addMarkersOnMap(List<Restaurant> restaurants) {
-        if(mMap == null || restaurants == null || restaurants.size() == 0) {
+        if (mMap == null || restaurants == null || restaurants.size() == 0) {
             return;
         }
-        for(Restaurant restaurant : restaurants) {
+        for (Restaurant restaurant : restaurants) {
             Location location = restaurant.getGeometry().getLocation();
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             Marker marker = mMap.addMarker(new MarkerOptions()
-            .position(latLng)
-            .title(restaurant.getName()));
+                    .position(latLng)
+                    .title(restaurant.getName()));
             marker.setTag(restaurant);
         }
 
         mMap.setOnMarkerClickListener(this);
     }
 
-    /**
-     * Attaches the list of restaurants ot the adapter for list view
-     */
-    private void addAdapterToRecyclerView(List<Restaurant> restaurants) {
-        mRestaurantListAdapter.addItems(restaurants);
-    }
-
     @Override
     public boolean onMarkerClick(Marker marker) {
         Restaurant restaurant = (Restaurant) marker.getTag();
-        if(restaurant == null) {
+        if (restaurant == null) {
             Log.e(TAG, "onMarkerClick: Restaurant object null");
             return false;
         }
         Toast.makeText(getContext(), restaurant.getName(), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMarkerClick: Opening detail view for "+ restaurant.getName());
+        Log.d(TAG, "onMarkerClick: Opening detail view for " + restaurant.getName());
         Intent intent = new Intent(getContext(), RestaurantDetailActivity.class);
         intent.putExtra(RestaurantDetailActivity.ARG_PLACE_ID, restaurant.getPlaceId());
         getActivity().startActivity(intent);

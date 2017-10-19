@@ -82,4 +82,9 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListHo
         mRestaurantList = restaurants;
         notifyDataSetChanged();
     }
+
+    public void updateItems(List<Restaurant> restaurants) {
+        mRestaurantList.addAll(restaurants);
+        notifyItemInserted(mRestaurantList.size() - restaurants.size());
+    }
 }

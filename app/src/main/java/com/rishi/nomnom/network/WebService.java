@@ -4,6 +4,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -18,4 +19,7 @@ public interface WebService {
 
     @GET("/maps/api/place/details/json")
     Observable<ApiResponse> getRestaurantDetail(@QueryMap Map<String, String> params);
+
+    @GET("/maps/api/place/nearbysearch/json")
+    Observable<ApiResponse> getNextPageRestaurants(@Query("pagetoken") String pageToken, @Query("key") String key);
 }

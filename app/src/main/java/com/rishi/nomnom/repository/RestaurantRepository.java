@@ -2,8 +2,10 @@ package com.rishi.nomnom.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 
 import com.rishi.nomnom.model.Restaurant;
+import com.rishi.nomnom.network.ApiResponse;
 import com.rishi.nomnom.network.NetworkResponseParser;
 import com.rishi.nomnom.network.WebService;
 import com.rishi.nomnom.util.Constants;
@@ -30,6 +32,7 @@ public class RestaurantRepository {
     private WebService mWebService;
     private LiveData<List<Restaurant>> mRestaurantsLiveData;
     private Map<String, LiveData<List<Restaurant>>> mCache;
+    private ApiResponse mRestaurantApiResponse;
 
     @Inject
     public RestaurantRepository(WebService webservice) {
@@ -56,6 +59,7 @@ public class RestaurantRepository {
                 .observeOn(Schedulers.io())
                 .map(apiResponse -> {
                     NetworkResponseParser parser = new NetworkResponseParser();
+                    mRestaurantApiResponse = apiResponse;
                     return parser.getRestaurants(apiResponse);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,5 +84,30 @@ public class RestaurantRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(restaurantDetailLiveData::setValue);
         return restaurantDetailLiveData;
+    }
+
+    public LiveData<List<Restaurant>> getNextPageRestaurants() {
+        final MutableLiveData<List<Restaurant>> nextPagesOfRestaurants = new MutableLiveData<>();
+        if(mRestaurantApiResponse == null || mRestaurantApiResponse.getNextPageToken() == null) {
+            return nextPagesOfRestaurants;
+        }
+
+        mWebService.getNextPageRestaurants(mRestaurantApiResponse.getNextPageToken(), GOOGLE_PLACES_KEY)
+                .observeOn(Schedulers.io())
+                .map(response -> {
+                    NetworkResponseParser parser = new NetworkResponseParser();
+                    // For updating next page
+                    mRestaurantApiResponse = response;
+                    return parser.getRestaurants(response);
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(restaurants -> {
+                    nextPagesOfRestaurants.setValue(restaurants);
+                }, throwable -> {
+                    Log.e(TAG, "getNextPageRestaurants: Failed to fetch next page restaurants");
+                }, () -> {
+                    Log.d(TAG, "getNextPageRestaurants: Done with next page restaurants");
+                });
+        return nextPagesOfRestaurants;
     }
 }
