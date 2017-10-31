@@ -90,6 +90,8 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
                 .newLatLngZoom(sfLatLng, Math.max(16, mMap.getCameraPosition().zoom)));
         mRestaurantViewModel.getRestaurants(location).observe(this, this::addMarkersOnMap);
 
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnCameraIdleListener(this);
     }
 
     /**
@@ -99,6 +101,7 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
         if (mMap == null || restaurants == null || restaurants.size() == 0) {
             return;
         }
+
         for (Restaurant restaurant : restaurants) {
             Location location = restaurant.getGeometry().getLocation();
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -107,9 +110,6 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback, Goog
                     .title(restaurant.getName()));
             marker.setTag(restaurant);
         }
-
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnCameraIdleListener(this);
     }
 
     @Override
