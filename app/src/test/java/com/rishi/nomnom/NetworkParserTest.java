@@ -48,14 +48,6 @@ public class NetworkParserTest {
     }
 
     @Test
-    public void testRestaurantListParser() {
-        List<Restaurant> restaurants = networkResponseParser.getRestaurants(MockResponseStore.getMockRestaurants());
-        Assert.assertEquals(restaurants.size(), 2);
-        Validator.verifyFirstRestaurant(restaurants.get(0));
-        Validator.verifySecondRestaurant(restaurants.get(1));
-    }
-
-    @Test
     public void testRestaurantDetailParser() {
         Restaurant restaurantDetail = networkResponseParser.getRestaurantDetail(MockResponseStore.getMockRestaurantDetails());
         Assert.assertNotNull(restaurantDetail);
