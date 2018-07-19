@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), this));
 
-        TabLayout tablayout = (TabLayout)findViewById(R.id.sliding_tabs);
+        TabLayout tablayout = findViewById(R.id.sliding_tabs);
         tablayout.setupWithViewPager(viewPager);
     }
 }
