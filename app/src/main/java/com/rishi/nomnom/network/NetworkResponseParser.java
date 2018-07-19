@@ -22,12 +22,12 @@ public class NetworkResponseParser {
 
     public List<Restaurant> getRestaurants(ApiResponse response) {
         if(!response.getStatus().equals("OK")){
-            Log.d(TAG, "Status Code: " + response.getStatus() + " Returning empty list.");
+//            Log.d(TAG, "Status Code: " + response.getStatus() + " Returning empty list.");
             return new ArrayList<>();
         }
 
         JsonElement results = response.getResults();
-        Log.d(TAG, "Response data "+ results);
+//        Log.d(TAG, "Response data "+ results);
         Type targetClassType = new TypeToken<List<Restaurant>>(){}.getType();
         List<Restaurant> targetCollection = new Gson().fromJson(results, targetClassType);
 
@@ -36,12 +36,12 @@ public class NetworkResponseParser {
 
     public Restaurant getRestaurantDetail(ApiResponse response) {
         if(!response.getStatus().equals("OK")){
-            Log.d(TAG, "Status Code: " + response.getStatus() + " Returning NULL");
+//            Log.d(TAG, "Status Code: " + response.getStatus() + " Returning NULL");
             return null;
         }
 
         JsonElement result = response.getResult();
-        Log.d(TAG, "Response data "+ result);
+//        Log.d(TAG, "Response data "+ result);
         Restaurant restaurantDetail = new Gson().fromJson(result, Restaurant.class);
 
         return restaurantDetail;
