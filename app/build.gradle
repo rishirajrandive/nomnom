@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "../jacoco.gradle"
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.rishi.nomnom"
         minSdkVersion 18
@@ -25,7 +27,9 @@ android {
         enabled = true
     }
     testOptions {
-        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -77,4 +81,8 @@ dependencies {
 
     // Circle image view for review author pics
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+  mavenCentral()
 }

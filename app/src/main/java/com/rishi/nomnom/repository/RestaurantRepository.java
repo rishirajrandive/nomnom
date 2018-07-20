@@ -2,13 +2,13 @@ package com.rishi.nomnom.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.provider.SyncStateContract;
 import android.util.Log;
 
 import com.rishi.nomnom.model.Restaurant;
 import com.rishi.nomnom.network.ApiResponse;
 import com.rishi.nomnom.network.NetworkResponseParser;
 import com.rishi.nomnom.network.WebService;
-import com.rishi.nomnom.util.Constants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +18,14 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_KEY;
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_LOCATION;
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_PAGE_TOKEN;
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_PLACE_ID;
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_RADIUS;
+import static com.rishi.nomnom.util.KotlinConstantsKt.PARAM_TYPE;
+
 /**
  * Created by rishi on 10/6/17.
  * Repo for restaurants
@@ -49,10 +57,10 @@ public class RestaurantRepository {
 
     public void fetchRestaurants(String location) {
         Map<String, String> params = new HashMap<>();
-        params.put(Constants.PARAM_LOCATION, location);
-        params.put(Constants.PARAM_RADIUS, "500");
-        params.put(Constants.PARAM_TYPE, "restaurant");
-        params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
+        params.put(PARAM_LOCATION, location);
+        params.put(PARAM_RADIUS, "500");
+        params.put(PARAM_TYPE, "restaurant");
+        params.put(PARAM_KEY, GOOGLE_PLACES_KEY);
         final MutableLiveData<List<Restaurant>> restaurantsLiveData = new MutableLiveData<>();
 
         mWebService.getRestaurants(params)
@@ -70,8 +78,8 @@ public class RestaurantRepository {
 
     public LiveData<Restaurant> getRestaurantDetail(String placeId) {
         Map<String, String> params = new HashMap<>(2);
-        params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
-        params.put(Constants.PARAM_PLACE_ID, placeId);
+        params.put(PARAM_KEY, GOOGLE_PLACES_KEY);
+        params.put(PARAM_PLACE_ID, placeId);
 
         final MutableLiveData<Restaurant> restaurantDetailLiveData = new MutableLiveData<>();
 
@@ -93,8 +101,8 @@ public class RestaurantRepository {
         }
 
         Map<String, String> params = new HashMap<>();
-        params.put(Constants.PARAM_PAGE_TOKEN, mRestaurantApiResponse.getNextPageToken());
-        params.put(Constants.PARAM_KEY, GOOGLE_PLACES_KEY);
+        params.put(PARAM_PAGE_TOKEN, mRestaurantApiResponse.getNextPageToken());
+        params.put(PARAM_KEY, GOOGLE_PLACES_KEY);
 
         mWebService.getRestaurants(params)
                 .observeOn(Schedulers.io())
