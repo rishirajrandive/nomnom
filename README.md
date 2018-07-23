@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/rishirajrandive/nomnom/branch/master/graph/badge.svg)](https://codecov.io/gh/rishirajrandive/nomnom)
+
 # nomnom
 Easy to use app to find restaurants
 
