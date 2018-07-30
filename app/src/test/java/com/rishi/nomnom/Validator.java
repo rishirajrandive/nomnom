@@ -13,7 +13,7 @@ import org.junit.Assert;
 
 public class Validator {
 
-    static void verifyFirstRestaurant(Restaurant restaurant) {
+    public static void verifyFirstRestaurant(Restaurant restaurant) {
         Assert.assertEquals(restaurant.getId(), "112226e5b074c6d767041d2761863c550d8a5f26");
         Assert.assertEquals(restaurant.getName(), "Zuni Café.");
         Assert.assertEquals(restaurant.getPlaceId(), "ChIJO7u9q5-AhYARiSSXyWv9eJ8");
@@ -38,7 +38,7 @@ public class Validator {
         Assert.assertEquals(photo.getPhotoUrl(), "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyB-bpw0ollWA5AKpT11Y2CL2qPFs4kC_dk&photo_reference=CmRaAAAAi8thfGP1CT0-RTWLN-BdOQi91lvoL7cnbwk2PftcnbJLkgHnuayXCs9ddQ-GO69tpWfKlefA8icPJkaoyO1VcIEFddWthBMwHrB_18zp3xVgCe3Qn_bnHK2YoYELSnzkEhBahVYWzXrMSHfyorx1lVJqGhQAHSbKHN_rPotmh0qXeaRsTWd8mA");
     }
 
-    static void verifySecondRestaurant(Restaurant restaurant) {
+    public static void verifySecondRestaurant(Restaurant restaurant) {
         Assert.assertEquals(restaurant.getId(), "2f06454d3f2021df376d7a49c82bbd4298e0694d");
         Assert.assertEquals(restaurant.getName(), "Rich Table");
         Assert.assertEquals(restaurant.getPlaceId(), "ChIJh_24QJ-AhYAR_xbUNVN2Xns");
